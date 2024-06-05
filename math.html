@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DRILLS AND EXERCISES</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> 
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #e8c3fd 25%, #c4a2fc 75%);
+    }
+
+    .navbar-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .navbar-item {
+      margin-right: 20px;
+    }
+
+    .quiz-container, .login-container {
+      backdrop-filter: blur(10px) saturate(200%);
+      -webkit-backdrop-filter: blur(10px) saturate(200%);
+      background-color: rgba(255, 255, 255, 0.45);
+      border-radius: 12px;
+      border: 1px solid rgba(209, 213, 219, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 80%;
+      max-width: 600px;
+      text-align: center;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .quiz-header {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    .title.is-2 {
+      text-align: right;
+      padding-right: 20px;
+    }
+
+    .title.is-1 {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .question {
+      display: none;
+    }
+
+    .question.active {
+      display: block;
+    }
+
+    .timer {
+      font-size: 18px;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
+
+    button {
+      background-color: #6a5acd;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #483d8b;
+    }
+
+    .result {
+      display: none;
+    }
+
+    .result.hidden {
+      display: none;
+    }
+
+    .result.active {
+      display: block;
+    }
+
+    .hover-background {
+      transition: background-color 0.3s ease;
+    }
+
+    .hover-background:hover {
+      background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    .login-container {
+      margin-top: 50px;
+    }
+
+    .login-form {
+      text-align: left;
+      margin: 0 auto;
+      max-width: 300px;
+    }
+
+    .login-form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .login-form input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .login-title {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .login-button-container {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="#">
+        <strong>Quadratic Equations</strong>
+      </a>
+    </div>
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="index.html">
+          Drills & Exercises
+        </a>
+        <a class="navbar-item" href="answer.html">
+          Answer key
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hover-background">
+    <div class="login-container">
+      <div class="login-title">LOG IN</div>
+      <form class="login-form" onsubmit="return login(event)">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="username" required/>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder=" password" required/>
+        <div class="login-button-container">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="quiz-container" style="display: none;">
+      <div class="quiz-header">
+        <div style="text-align: right;"></div>
+      </div>
+
+      <header class="header">
+        <u><h1 class="title is-1 has-text-light">Quiz</h1></u>
+      </header>
+
+      <div class="title is-2">DRILLS AND EXERCISES</div>
+      <p> Directions: Find the roots of the given quadratic equation. Choose the letter of the correct answer.</p><br>
+      <div class="quiz-content">
+        <div class="quiz-container">
+          <div id="quiz">
+            <div class="question active" id="question1">
+              <div class="timer" id="timer1">Time remaining: 3:00</div>
+              <p>1. x² + 10x + 25 = 0</p>
+              <ul>
+                <li><button onclick="submitAnswer(1, 'a')">a. x = 10,5</button></li>
+                <li><button onclick="submitAnswer(1, 'b')">b. x = 5</button></li>
+                <li><button onclick="submitAnswer(1, 'c')">c. x = -5</button></li>
+                <li><button onclick="submitAnswer(1, 'd')">d. x = 20,5</button></li>
+              </ul>
+            </div>
+            <div class="question" id="question2">
+              <div class="timer" id="timer2">Time remaining: 3:00</div>
+              <p>2. x² + 7x + 12 = 0</p>
+              <ul>
+                <li><button onclick="submitAnswer(2, 'a')">a. x = 7,11</button></li>
+                <li><button onclick="submitAnswer(2, 'b')">b. x = 12,7</button></li>
+                <li><button onclick="submitAnswer(2, 'c')">c. x = 4,3</button></li>
+                <li><button onclick="submitAnswer(2, 'd')">d. x = -4, -3</button></li>
+              </ul>
+            </div>
+            <div class="question" id="question3">
+              <div class="timer" id="timer3">Time remaining: 3:00</div>
+              <p>3. x² - 9x + 20 = 0</p>
+              <ul>
+                <li><button onclick="submitAnswer(3, 'a')">a. x = -4,5</button></li>
+                <li><button onclick="submitAnswer(3, 'b')">b. x = 4,5</button></li>
+                <li><button onclick="submitAnswer(3, 'c')">c. x = -5,4</button></li>
+                <li><button onclick="submitAnswer(3, 'd')">d. x = 9,12</button></li>
+              </ul>
+            </div>
+            <div class="question" id="question4">
+              <div class="timer" id="timer4">Time remaining: 3:00</div>
+              <p>4. x² + 7x - 8 = 0</p>
+              <ul>
+                <li><button onclick="submitAnswer(4, 'a')">a. x = -8,1</button></li>
+                <li><button onclick="submitAnswer(4, 'b')">b. x = 8,1</button></li>
+                <li><button onclick="submitAnswer(4, 'c')">c. x = 7,1</button></li>
+                <li><button onclick="submitAnswer(4, 'd')">d. x = -7,1</button></li>
+              </ul>
+            </div>
+            <div class="question" id="question5">
+              <div class="timer" id="timer5">Time remaining: 3:00</div>
+              <p>5. x² + 12x + 36 = 0</p>
+              <ul>
+                <li><button onclick="submitAnswer(5, 'a')">a. x = -6</button></li>
+                <li><button onclick="submitAnswer(5, 'b')">b. x = 6</button></li>
+                <li><button onclick="submitAnswer(5, 'c')">c. x = 3,-6</button></li>
+                <li><button onclick="submitAnswer(5, 'd')">d. x = -12, 6</button></li>
+              </ul>
+            </div>
+            <div class="result hidden" id="result">
+              <p>Your score is: <span id="score"></span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    let score = 0;
+    const correctAnswers = {
+      1: 'c',
+      2: 'd',
+      3: 'b',
+      4: 'a',
+      5: 'a'
+    };
+
+    function login(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      if (username === 'user' && password === 'pass') {
+        document.querySelector('.login-container').style.display = 'none';
+        document.querySelector('.quiz-container').style.display = 'block';
+        startTimers();
+      } else {
+        alert('Incorrect username or password. Please try again.');
+      }
+    }
+
+    function submitAnswer(questionNumber, answer) {
+      if (correctAnswers[questionNumber] === answer) {
+        score++;
+      }
+      const currentQuestion = document.getElementById('question' + questionNumber);
+      currentQuestion.classList.remove('active');
+      if (questionNumber < 5) {
+        const nextQuestion = document.getElementById('question' + (questionNumber + 1));
+        nextQuestion.classList.add('active');
+      } else {
+        const resultContainer = document.getElementById('result');
+        const scoreSpan = document.getElementById('score');
+        resultContainer.classList.remove('hidden');
+        scoreSpan.innerText = `${score} / 5`;
+        setTimeout(() => {
+          window.location.href = `dashboard.html?score=${score}`;
+        }, 3000);
+      }
+    }
+
+    function startTimers() {
+      for (let i = 1; i <= 5; i++) {
+        startTimer('timer' + i, 3 * 60);
+      }
+    }
+
+    function startTimer(timerId, duration) {
+      let timer = duration, minutes, seconds;
+      const display = document.getElementById(timerId);
+      const intervalId = setInterval(() => {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = `Time remaining: ${minutes}:${seconds}`;
+
+        if (--timer < 0) {
+          clearInterval(intervalId);
+          const questionNumber = timerId.replace('timer', '');
+          submitAnswer(parseInt(questionNumber), null); // Automatically submit null if time is up
+        }
+      }, 1000);
+    }
+
+  </script>
+
+   <footer class="footer has-text-centered">
+    <div class="content">
+      <p>Monsalud,Mark Jade</p>
+      <p>Ramos,Flexie</p>
+      <p>Rin,Rexsian</p>
+      <p>Dago-oc,Jeramy</p>
+      <p>Ruta,Renzo</p>
+      <p>&copy; 2024 Quadratic Equations. All rights reserved.</p>
+    </div>
+  </footer> 
+</body>
+</html>
